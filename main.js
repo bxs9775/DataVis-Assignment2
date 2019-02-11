@@ -46,9 +46,19 @@ function makeChart1(dataset) {
     .append('rect')
     .attr('x', 80)
     .attr('y', (d) => yScale(d.app_name))
-    .attr('width', (d) => xScale(d.downloads))
+    .attr('width', (d) => 0)
     .attr('height', 20)
-    .attr('fill', (d) => colorScale(d.downloads));
+    .attr('fill', '#88d')
+    .transition('displaydata')
+    .delay((d,i) => 35*i)
+    .attr('width', (d) => xScale(d.downloads))
+    .attr('fill', (d) => colorScale(d.downloads))
+    .transition('staticfill')
+    .delay((d,i) => 35*i)
+    .attr('fill', '#88d')
+    .transition('scaledfill')
+    .delay((d,i) => 35*i)
+    .attr('fill', (d) => colorScale(d.downloads))
 
   // AXES
   chart1.append('g')
@@ -65,8 +75,8 @@ function makeChart1(dataset) {
 window.onload = function () {
   d3.csv('fake_app_download_rating.csv', rowConverter)
     .then((dataset) => {
-
+    
       makeChart1(dataset);
-
+      
     });
 }
